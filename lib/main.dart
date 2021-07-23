@@ -21,19 +21,30 @@ class MyApp extends ConsumerWidget {
   }
 }
 
-class Home extends ConsumerWidget {
+class Home extends StatelessWidget {
   Home({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar(title: Text(this.title)), body: Center(child: Counter()), floatingActionButton: AddButton());
+  }
+}
+
+class Counter extends ConsumerWidget {
+  @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-        appBar: AppBar(title: Text(this.title)),
-        body: Center(child: Consumer(builder: (context, ref, _) {
-          final count = ref.watch(counterProvider).state;
-          return Text("$count");
-        })),
-        floatingActionButton: FloatingActionButton(onPressed: () => ref.read(counterProvider).state++, child: const Icon(Icons.add)));
+    return Consumer(builder: (context, ref, _) {
+      final count = ref.watch(counterProvider).state;
+      return Text("$count");
+    });
+  }
+}
+
+class AddButton extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return FloatingActionButton(onPressed: () => ref.read(counterProvider).state++, child: const Icon(Icons.add));
   }
 }

@@ -12,7 +12,7 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String value = ref.watch(helloWorldProvider);
+    final String value = ref.read(helloWorldProvider);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
@@ -32,9 +32,9 @@ class Home extends StatelessWidget {
   }
 }
 
-class Counter extends ConsumerWidget {
+class Counter extends StatelessWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, _) {
       final count = ref.watch(counterProvider).state;
       return Text("$count");

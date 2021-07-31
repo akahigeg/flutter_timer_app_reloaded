@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:vector_math/vector_math.dart' as vector_math;
+import 'package:flutter_timer/providers.dart';
+import 'package:flutter_timer/view/timer/buttons.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -21,70 +19,6 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
-
-// final counterProvider = StateProvider((ref) => 0);
-
-// class Home extends StatelessWidget {
-//   Home({Key? key, required this.title}) : super(key: key);
-
-//   final String title;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(appBar: AppBar(title: Text(this.title)), body: Center(child: Counter()), floatingActionButton: AddButton());
-//   }
-// }
-
-// class Counter extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer(builder: (context, ref, _) {
-//       final count = ref.watch(counterProvider).state;
-//       return Text("$count");
-//     });
-//   }
-// }
-
-// class AddButton extends ConsumerWidget {
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return FloatingActionButton(onPressed: () => ref.read(counterProvider).state++, child: const Icon(Icons.add));
-//   }
-// }
-
-class Timer {
-  final int timerId;
-
-  int initialMin = 0;
-  int initialSec = 0;
-
-  int currentMin = 0;
-  int currentSec = 0;
-  int currentMsec = 0;
-
-  Timer({required this.timerId}) {
-    restore();
-  }
-
-  void restore() async {
-    var prefs = await SharedPreferences.getInstance();
-    var timer = prefs.getString(this.timerId.toString()) ?? "03:00:00";
-    var numbers = timer.toString().split(":");
-
-    this.initialMin = int.parse(numbers[0]);
-    this.initialSec = int.parse(numbers[1]);
-
-    this.currentMin = this.initialMin;
-    this.currentSec = this.initialSec;
-    this.currentMsec = 0;
-
-    // update();
-    // notifyListeners();
-  }
-}
-
-final timerIdProvider = StateProvider((ref) => 1);
-final timerProvider = StateProvider((ref) => Timer(timerId: 1));
 
 class FlutterTimer extends StatelessWidget {
   FlutterTimer({Key? key}) : super(key: key);
@@ -116,9 +50,9 @@ class FlutterTimer extends StatelessWidget {
                     return Column(children: [_pages[index % _pages.length]]);
                   },
                   onPageChanged: (int page) {
+                    // アクティブなタイマーの切り替え
                     timerId.state = page % _pages.length + 1;
 
-                    // TODO: アクティブなタイマーの切り替え
                     // timerProvider = StateProvider((ref) => Timer(timerId: page % _pages.length + 1));
                     // print("page: $page");
                     // print("page % _pages.length + 1: ${page % _pages.length + 1}");
@@ -149,6 +83,7 @@ class TimerWidget extends StatelessWidget {
           ]),
           // TODO: EDITボタン
           // TODO: START/STOP/RESETボタン
+          ControlButtons()
         ],
       ));
     });

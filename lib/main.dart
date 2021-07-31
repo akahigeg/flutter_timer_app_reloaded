@@ -40,7 +40,8 @@ class FlutterTimer extends StatelessWidget {
         body: IconTheme(
           data: IconThemeData(color: Colors.black.withOpacity(0.8)),
           child: Consumer(builder: (context, ref, child) {
-            final timerId = ref.watch(timerIdProvider);
+            final timerId = ref.read(timerIdProvider);
+
             return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
               PageView.builder(
                   physics: AlwaysScrollableScrollPhysics(),
@@ -55,12 +56,15 @@ class FlutterTimer extends StatelessWidget {
                     // アクティブなタイマーの切り替え
                     timerId.state = page % _pages.length + 1;
 
+                    final timer = ref.read(timerProvider);
+                    timer.reset();
+
                     // timerProvider = StateProvider((ref) => Timer(timerId: page % _pages.length + 1));
                     // print("page: $page");
                     // print("page % _pages.length + 1: ${page % _pages.length + 1}");
 
+                    // ドットインジケーターのポジションの更新
                     ref.read(dotIndicatorProvider).state = (page % _pages.length).toDouble();
-                    // TODO: ドットインジケーターのポジションの更新
                   }),
               // TODO: ドットインジケーターの表示
               Positioned(

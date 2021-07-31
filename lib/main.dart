@@ -41,6 +41,7 @@ class FlutterTimer extends StatelessWidget {
           data: IconThemeData(color: Colors.black.withOpacity(0.8)),
           child: Consumer(builder: (context, ref, child) {
             final timerId = ref.read(timerIdProvider);
+            final timer = ref.read(timerProvider);
 
             return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
               PageView.builder(
@@ -55,9 +56,7 @@ class FlutterTimer extends StatelessWidget {
                   onPageChanged: (int page) {
                     // アクティブなタイマーの切り替え
                     timerId.state = page % _pages.length + 1;
-
-                    final timer = ref.read(timerProvider);
-                    timer.reset();
+                    timer.switchTimerId(timerId.state);
 
                     // timerProvider = StateProvider((ref) => Timer(timerId: page % _pages.length + 1));
                     // print("page: $page");

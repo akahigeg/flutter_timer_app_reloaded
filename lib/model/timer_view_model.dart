@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TimerViewModel extends ChangeNotifier {
-  final int timerId;
+  int timerId;
 
   int initialMin = 0;
   int initialSec = 0;
@@ -24,6 +24,11 @@ class TimerViewModel extends ChangeNotifier {
     restore();
   }
 
+  void switchTimerId(int timerId) {
+    this.timerId = timerId;
+    restore();
+  }
+
   void restore() async {
     var prefs = await SharedPreferences.getInstance();
     var timer = prefs.getString(this.timerId.toString()) ?? "03:00:00";
@@ -35,6 +40,8 @@ class TimerViewModel extends ChangeNotifier {
     this.currentMin = this.initialMin;
     this.currentSec = this.initialSec;
     this.currentMsec = 0;
+
+    print("initialMin: ${this.initialMin} of timer ${this.timerId}");
 
     // update();
     notifyListeners();
@@ -138,7 +145,6 @@ class TimerViewModel extends ChangeNotifier {
   void update() async {
     var prefs = await SharedPreferences.getInstance();
     prefs.setString(this.timerId.toString(), "${this.currentMin.toString()}:${this.currentSec.toString()}:00");
-    print(this.timerId);
   }
 
   void finishEdit() {

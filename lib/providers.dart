@@ -38,7 +38,7 @@ class TimerViewModel extends ChangeNotifier {
     this.currentMsec = 0;
 
     // update();
-    // notifyListeners();
+    notifyListeners();
   }
 
   void start() {
@@ -93,8 +93,6 @@ class TimerViewModel extends ChangeNotifier {
     this.currentSec = newSec;
     this.currentMin = newMin;
 
-    print(this.currentMsec);
-
     if (this.currentMin == 0 && this.currentSec == 0 && this.currentMsec == 0) {
       // すべての桁が0になったらタイマー終了
       finish();
@@ -113,7 +111,19 @@ class TimerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void reset() {}
+  void reset() {
+    this.isStart = false;
+    this.lastStopTime = null;
+    this.stoppedMilliseconds = 0;
+
+    if (this.timer != null) {
+      this.timer.cancel();
+    }
+
+    // _stopTimer();
+    restore();
+  }
+
   void finish() {}
 }
 

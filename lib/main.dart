@@ -57,6 +57,7 @@ class FlutterTimer extends StatelessWidget {
                     // アクティブなタイマーの切り替え
                     timerId.state = page % _pages.length + 1;
                     timer.switchTimerId(timerId.state);
+                    timer.reset();
 
                     // timerProvider = StateProvider((ref) => Timer(timerId: page % _pages.length + 1));
                     // print("page: $page");

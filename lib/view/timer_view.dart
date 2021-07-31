@@ -73,7 +73,7 @@ class TimerWidget extends StatelessWidget {
           child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          Container(child: CircleIndicator(), margin: EdgeInsets.fromLTRB(0, 0, 0, 0)),
+          Container(child: timer.inEdit ? CircleIndicatorForEdit() : CircleIndicator(), margin: EdgeInsets.fromLTRB(0, 0, 0, 0)),
           // タイマー表示
           Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             TimerName(),

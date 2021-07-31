@@ -83,7 +83,7 @@ class TimerWidget extends StatelessWidget {
           ]),
           // TODO: EDITボタン
           // TODO: START/STOP/RESETボタン
-          ControlButtons()
+          Container(child: ControlButtons(), margin: EdgeInsets.fromLTRB(0, 400, 0, 0))
         ],
       ));
     });
@@ -94,7 +94,7 @@ class Display extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final timer = ref.watch(timerProvider).state;
+      final timer = ref.watch(timerProvider);
 
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,

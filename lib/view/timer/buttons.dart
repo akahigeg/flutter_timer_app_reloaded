@@ -7,14 +7,14 @@ class ControlButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final isTimerStarting = ref.watch(isTimerStartingProvider).state;
+      final timer = ref.watch(timerProvider);
 
       return Container(
           margin: EdgeInsets.only(top: 50.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              isTimerStarting ? StopButton() : StartButton(),
+              timer.isStart ? StopButton() : StartButton(),
               ResetButton(),
             ],
           ));
@@ -26,7 +26,7 @@ class StartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final timer = ref.read(timerProvider).state;
+      final timer = ref.read(timerProvider);
 
       return Container(
         width: 70,
@@ -46,7 +46,7 @@ class StopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final timer = ref.read(timerProvider).state;
+      final timer = ref.read(timerProvider);
 
       return Container(
         width: 70,
@@ -66,7 +66,7 @@ class ResetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final timer = ref.read(timerProvider).state;
+      final timer = ref.read(timerProvider);
 
       return Container(
         width: 70,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_timer/providers.dart';
-import 'package:flutter_timer/view/timer/buttons.dart';
+import 'package:flutter_timer/view/timer_view.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -63,71 +63,5 @@ class FlutterTimer extends StatelessWidget {
             ]);
           }),
         ));
-  }
-}
-
-class TimerWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer(builder: (context, ref, child) {
-      return Container(
-          child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          // TODO: サークルインジケーター
-          // タイマー表示
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            TimerName(),
-            Display()
-            // timer.inEdit ? DisplayEdit() : Display(),
-          ]),
-          // TODO: EDITボタン
-          // TODO: START/STOP/RESETボタン
-          Container(child: ControlButtons(), margin: EdgeInsets.fromLTRB(0, 400, 0, 0))
-        ],
-      ));
-    });
-  }
-}
-
-class Display extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer(builder: (context, ref, child) {
-      final timer = ref.watch(timerProvider);
-
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Text(
-            "${timer.currentMin.toString().padLeft(2, '0')}:",
-            style: Theme.of(context).textTheme.headline2,
-          ),
-          Text(
-            "${timer.currentSec.toString().padLeft(2, '0')}:",
-            style: Theme.of(context).textTheme.headline2,
-          ),
-          Text(
-            "${timer.currentMsec.toString().padLeft(2, '0')}",
-            style: Theme.of(context).textTheme.headline3,
-          ),
-        ],
-      );
-    });
-  }
-}
-
-class TimerName extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer(builder: (context, ref, child) {
-      final timerId = ref.watch(timerIdProvider).state;
-
-      return Container(
-        alignment: AlignmentDirectional.center,
-        child: Text("TIMER-${timerId.toString().padLeft(2, '0')}", style: TextStyle(color: Colors.white)),
-      );
-    });
   }
 }

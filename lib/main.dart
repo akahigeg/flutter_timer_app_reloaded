@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_timer/providers.dart';
 import 'package:flutter_timer/view/timer_view.dart';
 
+import 'package:dots_indicator/dots_indicator.dart';
+
 void main() {
   runApp(ProviderScope(child: MyApp()));
 }
@@ -57,9 +59,16 @@ class FlutterTimer extends StatelessWidget {
                     // print("page: $page");
                     // print("page % _pages.length + 1: ${page % _pages.length + 1}");
 
+                    ref.read(dotIndicatorProvider).state = (page % _pages.length).toDouble();
                     // TODO: ドットインジケーターのポジションの更新
                   }),
               // TODO: ドットインジケーターの表示
+              Positioned(
+                  child: Consumer(builder: (context, ref, child) {
+                    final position = ref.watch(dotIndicatorProvider).state;
+                    return Container(child: DotsIndicator(dotsCount: _pages.length, position: position), margin: EdgeInsets.fromLTRB(0, 50, 0, 0));
+                  }),
+                  bottom: 180),
             ]);
           }),
         ));

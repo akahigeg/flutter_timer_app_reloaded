@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_timer/providers.dart';
 import 'package:flutter_timer/view/timer/buttons.dart';
+import 'package:flutter_timer/view/timer/edit.dart';
 
 import 'package:vector_math/vector_math.dart' as vector_math;
 
@@ -66,6 +67,8 @@ class TimerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
+      final timer = ref.watch(timerProvider);
+
       return Container(
           child: Stack(
         alignment: AlignmentDirectional.center,
@@ -74,11 +77,12 @@ class TimerWidget extends StatelessWidget {
           // タイマー表示
           Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             TimerName(),
-            Display()
-            // timer.inEdit ? DisplayEdit() : Display(),
+            timer.inEdit ? DisplayEdit() : Display(),
           ]),
-          // TODO: EDITボタン
-          Container(child: ControlButtons(), margin: EdgeInsets.fromLTRB(0, 400, 0, 0))
+          // EDITボタン
+          Container(child: timer.inEdit ? null : EditButton(), margin: EdgeInsets.fromLTRB(0, 180, 0, 0)),
+          // 操作ボタン
+          Container(child: timer.inEdit ? InEditButtons() : ControlButtons(), margin: EdgeInsets.fromLTRB(0, 400, 0, 0))
         ],
       ));
     });

@@ -119,9 +119,48 @@ class TimerViewModel extends ChangeNotifier {
       this.timer.cancel();
     }
 
-    // _stopTimer();
     restore();
   }
 
-  void finish() {}
+  void finish() {
+    reset();
+  }
+
+  void startEdit() {
+    this.inEdit = true;
+    if (this.timer != null) {
+      reset();
+    }
+
+    notifyListeners();
+  }
+
+  void update() async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setString(this.timerId.toString(), "${this.currentMin.toString()}:${this.currentSec.toString()}:00");
+    print(this.timerId);
+  }
+
+  void finishEdit() {
+    update();
+    this.inEdit = false;
+    reset();
+  }
+
+  void cancelEdit() {
+    this.inEdit = false;
+    reset();
+  }
+
+  void changeMin(newMin) {
+    this.currentMin = newMin;
+
+    notifyListeners();
+  }
+
+  void changeSec(newSec) {
+    this.currentSec = newSec;
+
+    notifyListeners();
+  }
 }

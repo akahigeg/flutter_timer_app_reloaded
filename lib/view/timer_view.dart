@@ -127,8 +127,11 @@ class TimerWidget extends StatelessWidget {
           // タイマー表示
           Container(child: timer.inEdit ? DisplayEdit() : Display(), margin: EdgeInsets.fromLTRB(0, 200, 0, 0)),
 
-          // EDITボタン
-          Container(child: timer.inEdit ? null : EditButton(), margin: EdgeInsets.fromLTRB(0, 300, 0, 0)),
+          // TODO: リピートボタン＆リピート機能
+          Container(child: timer.inEdit ? null : RepeatSwitch(), margin: EdgeInsets.fromLTRB(0, 300, 0, 0)),
+
+          // 設定ボタン
+          Container(child: timer.inEdit ? null : EditButton(), margin: EdgeInsets.fromLTRB(300, 50, 0, 0)),
 
           // 操作ボタン
           Container(child: timer.inEdit ? InEditButtons() : ControlButtons(), margin: EdgeInsets.fromLTRB(0, 400, 0, 0)),
@@ -143,6 +146,24 @@ class TimerWidget extends StatelessWidget {
           ),
         ],
       ));
+    });
+  }
+}
+
+class RepeatSwitch extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(builder: (context, ref, child) {
+      return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text("REPEAT", style: TextStyle(color: Colors.grey[300])),
+        new Switch(
+            value: ref.watch(repeatSwitchProvider).state,
+            onChanged: (newValue) {
+              // TODO: タイマーごとにリピートのオンオフを記憶
+              print(newValue);
+              ref.read(repeatSwitchProvider).state = newValue;
+            })
+      ]);
     });
   }
 }

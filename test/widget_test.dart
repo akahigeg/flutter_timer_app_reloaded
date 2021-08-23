@@ -85,7 +85,7 @@ void main() {
       expect(find.text('03:'), findsNothing);
 
       // 秒
-      expect(find.text('00:'), findsOneWidget);
+      expect(find.text('00.'), findsOneWidget);
 
       // ミリ秒以下2桁
       expect(find.text('00'), findsOneWidget);

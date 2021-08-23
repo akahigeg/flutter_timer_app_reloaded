@@ -162,7 +162,7 @@ class Display extends StatelessWidget {
             style: Theme.of(context).textTheme.headline2,
           ),
           Text(
-            "${timer.currentSec.toString().padLeft(2, '0')}:",
+            "${timer.currentSec.toString().padLeft(2, '0')}.",
             style: Theme.of(context).textTheme.headline2,
           ),
           Text(

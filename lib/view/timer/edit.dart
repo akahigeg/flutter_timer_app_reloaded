@@ -65,7 +65,6 @@ class DisplayEdit extends StatelessWidget {
       final timer = ref.read(timerProvider);
 
       return Container(
-          width: 40,
           height: 25,
           child: ElevatedButton(
               child: Icon(upOrDown == "up" ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),

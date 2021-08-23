@@ -29,8 +29,8 @@ class TimerView extends StatelessWidget {
             final timerId = ref.read(timerIdProvider);
             final timer = ref.read(timerProvider);
 
-            return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-              PageView.builder(
+            return Container(
+              child: PageView.builder(
                   physics: AlwaysScrollableScrollPhysics(),
                   controller: _pageController,
                   itemBuilder: (BuildContext context, int index) {
@@ -46,15 +46,7 @@ class TimerView extends StatelessWidget {
                     // ドットインジケーターのポジションの更新
                     ref.read(dotIndicatorPositionProvider).state = (page % _pages.length).toDouble();
                   }),
-              // TODO: ドットインジケーターの位置
-              Positioned(
-                  child: Consumer(builder: (context, ref, child) {
-                    final position = ref.watch(dotIndicatorPositionProvider).state;
-                    final count = ref.watch(dotIndicatorCountProvider).state;
-                    return Container(child: DotsIndicator(dotsCount: count, position: position), margin: EdgeInsets.fromLTRB(0, 50, 0, 0));
-                  }),
-                  bottom: 180),
-            ]);
+            );
           }),
         ));
   }
@@ -124,18 +116,31 @@ class TimerWidget extends StatelessWidget {
 
       return Container(
           child: Stack(
-        alignment: AlignmentDirectional.center,
+        alignment: AlignmentDirectional.topCenter,
         children: [
-          Container(child: timer.inEdit ? CircleIndicatorForEdit() : CircleIndicator(), margin: EdgeInsets.fromLTRB(0, 0, 0, 0)),
+          // サークルインジケーター
+          Container(child: timer.inEdit ? CircleIndicatorForEdit() : CircleIndicator(), margin: EdgeInsets.fromLTRB(0, 100, 0, 0)),
+
+          // タイマー名
+          Container(child: TimerName(), margin: EdgeInsets.fromLTRB(0, 180, 0, 0)),
+
           // タイマー表示
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            TimerName(),
-            timer.inEdit ? DisplayEdit() : Display(),
-          ]),
+          Container(child: timer.inEdit ? DisplayEdit() : Display(), margin: EdgeInsets.fromLTRB(0, 200, 0, 0)),
+
           // EDITボタン
-          Container(child: timer.inEdit ? null : EditButton(), margin: EdgeInsets.fromLTRB(0, 180, 0, 0)),
+          Container(child: timer.inEdit ? null : EditButton(), margin: EdgeInsets.fromLTRB(0, 300, 0, 0)),
+
           // 操作ボタン
-          Container(child: timer.inEdit ? InEditButtons() : ControlButtons(), margin: EdgeInsets.fromLTRB(0, 400, 0, 0))
+          Container(child: timer.inEdit ? InEditButtons() : ControlButtons(), margin: EdgeInsets.fromLTRB(0, 400, 0, 0)),
+
+          // ドットインジケーター
+          Container(
+            child: Consumer(builder: (context, ref, child) {
+              final position = ref.watch(dotIndicatorPositionProvider).state;
+              final count = ref.watch(dotIndicatorCountProvider).state;
+              return Container(child: DotsIndicator(dotsCount: count, position: position), margin: EdgeInsets.fromLTRB(0, 600, 0, 0));
+            }),
+          ),
         ],
       ));
     });

@@ -35,7 +35,7 @@ class TimerView extends StatelessWidget {
                   controller: _pageController,
                   itemBuilder: (BuildContext context, int index) {
                     print("timerId: ${index % _pages.length + 1}");
-                    return Column(children: [_pages[index % _pages.length]]);
+                    return Container(child: _pages[index % _pages.length]);
                   },
                   onPageChanged: (int page) {
                     // アクティブなタイマーの切り替え

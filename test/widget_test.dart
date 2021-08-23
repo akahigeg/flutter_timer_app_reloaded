@@ -74,7 +74,7 @@ void main() {
     });
   });
 
-  testWidgets('Timer is 04:00:00', (WidgetTester tester) async {
+  testWidgets('Timer is 04:00.00', (WidgetTester tester) async {
     await tester.runAsync(() async {
       await tester.pumpWidget(ProviderScope(child: MyApp()));
 

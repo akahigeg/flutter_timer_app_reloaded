@@ -44,12 +44,14 @@ class TimerView extends StatelessWidget {
                     timer.reset();
 
                     // ドットインジケーターのポジションの更新
-                    ref.read(dotIndicatorProvider).state = (page % _pages.length).toDouble();
+                    ref.read(dotIndicatorPositionProvider).state = (page % _pages.length).toDouble();
                   }),
+              // TODO: ドットインジケーターの位置
               Positioned(
                   child: Consumer(builder: (context, ref, child) {
-                    final position = ref.watch(dotIndicatorProvider).state;
-                    return Container(child: DotsIndicator(dotsCount: _pages.length, position: position), margin: EdgeInsets.fromLTRB(0, 50, 0, 0));
+                    final position = ref.watch(dotIndicatorPositionProvider).state;
+                    final count = ref.watch(dotIndicatorCountProvider).state;
+                    return Container(child: DotsIndicator(dotsCount: count, position: position), margin: EdgeInsets.fromLTRB(0, 50, 0, 0));
                   }),
                   bottom: 180),
             ]);
